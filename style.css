@@ -19,6 +19,7 @@ body{
 }
 
 button {
+    margin: 10px;
     width: 13em;
     height: 3em;
     background-color: white;
