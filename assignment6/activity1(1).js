@@ -1,11 +1,11 @@
 const total = document.querySelector('.total'); 
 const avg = document.querySelector('.average');
 
-
 let totalRes = 0;
 let avgRes = 0
 let grade;
 let i = 0;
+
 do { 
     grade = prompt('Enter student grade:');
     totalRes += Number(grade)
