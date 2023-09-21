@@ -1,15 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Get references to form elements
     const form = document.querySelector('.form');
-    const nameInput = document.getElementById('name');
-    const lastNameInput = document.getElementById('last');
-    const addressInput = document.getElementById('address');
-    const cityInput = document.getElementById('city');
-    const stateInput = document.getElementById('state');
-    const postalInput = document.getElementById('postal');
-    const emailInput = document.getElementById('email');
-    const phoneInput = document.getElementById('phone');
-    const birthInput = document.getElementById('birth');
     const submitButton = document.querySelector('.btn');
 
     // Regular expressions for validation
@@ -19,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const emailReg = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     const phoneReg = /^\d{10}$/;
     
-    // create error for empty fields
+    // Function to create error message
     const createError = (input, text) => {
         const parent = input.parentNode;
     
@@ -39,15 +30,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // creating remove eroor func
+    // Function to remove error message
     const removeError = (input) => {
-        const parent = input.closest('.form-group'); 
-        if (parent) {
-            const labelErr = parent.querySelector('.labelErr');
-            if (labelErr) {
-                labelErr.remove();
-                input.classList.remove('err');
-            }
+        const parent = input.closest('.form-group');
+        const labelErr = parent.querySelector('.labelErr');
+        if (labelErr) {
+            labelErr.remove();
+            input.classList.remove('err');
         }
     }
 
@@ -55,76 +44,38 @@ document.addEventListener('DOMContentLoaded', function () {
     const validateInput = () => {
         let isValid = true;
     
-        if (!nameReg.test(nameInput.value)) {
-            createError(nameInput, 'Invalid name!');
-            isValid = false;
-        } else {
-            removeError(nameInput);
-        }
-    
-        if (!nameReg.test(lastNameInput.value)) {
-            createError(lastNameInput, 'Invalid last name!');
-            isValid = false;
-        } else {
-            removeError(lastNameInput);
-        }
-    
-        if (addressInput.value === '') {
-            createError(addressInput, 'Invalid address!');
-            isValid = false;
-        } else {
-            removeError(addressInput);
-        }
-    
-        if (!cityReg.test(cityInput.value)) {
-            createError(cityInput, 'Invalid city!');
-            isValid = false;
-        } else {
-            removeError(cityInput);
-        }
-    
-        if (!cityReg.test(stateInput.value)) {
-            createError(stateInput, 'Invalid state!');
-            isValid = false;
-        } else {
-            removeError(stateInput);
-        }
-    
-        if (!zipReg.test(postalInput.value)) {
-            createError(postalInput, 'Invalid zip code!');
-            isValid = false;
-        } else {
-            removeError(postalInput);
-        }
-    
-        if (!emailReg.test(emailInput.value)) {
-            createError(emailInput, 'Invalid email!');
-            isValid = false;
-        } else {
-            removeError(emailInput);
-        }
-    
-        if (!phoneReg.test(phoneInput.value)) {
-            createError(phoneInput, 'Invalid phone number!');
-            isValid = false;
-        } else {
-            removeError(phoneInput);
-        }
-    
+        const fields = [
+            { input: document.getElementById('name'), regex: nameReg, errorMessage: 'Invalid name!' },
+            { input: document.getElementById('last'), regex: nameReg, errorMessage: 'Invalid last name!' },
+            { input: document.getElementById('address'), regex: /.+/, errorMessage: 'Invalid address!' },
+            { input: document.getElementById('city'), regex: cityReg, errorMessage: 'Invalid city!' },
+            { input: document.getElementById('state'), regex: cityReg, errorMessage: 'Invalid state!' },
+            { input: document.getElementById('postal'), regex: zipReg, errorMessage: 'Invalid zip code!' },
+            { input: document.getElementById('email'), regex: emailReg, errorMessage: 'Invalid email!' },
+            { input: document.getElementById('phone'), regex: phoneReg, errorMessage: 'Invalid phone number!' },
+        ];
+
+        fields.forEach(({ input, regex, errorMessage }) => {
+            if (!regex.test(input.value)) {
+                createError(input, errorMessage);
+                isValid = false;
+            } else {
+                removeError(input);
+            }
+        });
+
         return isValid;
     }
-
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        if(validateInput() === true){
-            alert('Form submitted sucsessfuly!')
+        if (validateInput()) {
+            alert('Form submitted successfully!');
             form.reset();
             form.querySelectorAll('input').forEach(input => {
-                removeError(input)
-            })
+                removeError(input);
+            });
         }
-
-    })
+    });
 });
