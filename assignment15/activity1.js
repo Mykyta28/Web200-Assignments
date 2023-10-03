@@ -14,6 +14,8 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    
+
     btnDisadvantages.addEventListener('click', () => {
         if (disadvantagesList.style.display === 'none' || disadvantagesList.style.display === '') {
             disadvantagesList.style.display = 'block';
